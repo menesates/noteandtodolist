@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head xmlns:th="http://www.thymeleaf.org">
+    <meta charset="UTF-8" />
+    <title>Notes</title>
+    <link th:href="@{/css/main.css}" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <td>ID</td>
+                <td>Header</td>
+                <td>Body</td>
+                <td>Username</td>
+                <td>Category</td>
+            </tr>
+        </thead>
+        <th:block th:each="note, iterStat:${notes}">
+            <tr th:bgcolor="${iterStat.odd}?white:lightgray">
+                <td th:text="${note.id}"/>
+                <td th:text="${note.header}"/>
+                <td th:text="${note.body}"/>
+                <td th:text="${note.username}"/>
+                <td th:text="${note.category}"/>
+            </tr>
+        </th:block>
+    </table>
+</body>
+</html>

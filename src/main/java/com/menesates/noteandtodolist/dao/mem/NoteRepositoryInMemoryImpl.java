@@ -2,6 +2,7 @@ package com.menesates.noteandtodolist.dao.mem;
 
 import com.menesates.noteandtodolist.dao.NoteRepository;
 import com.menesates.noteandtodolist.model.Note;
+import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
  * @author menesates
  * @since 2018-10-09
  */
+@Repository
 public class NoteRepositoryInMemoryImpl implements NoteRepository {
 
     private Map<Long, Note> noteMap = new HashMap<>();
