@@ -88,7 +88,7 @@ public class NoteRepositoryInMemoryImpl implements NoteRepository {
 
     @Override
     public void create(Note note) {
-        note.setId(new Date().getTime());
+        //note.setId(new Date().getTime());
         noteMap.put(note.getId(),note);
     }
 
