@@ -30,6 +30,10 @@ public class NoteAndTodoServiceImpl implements NoteAndTodoService {
 
     @Override
     public Note findNote(Long id) throws NoteNotFoundException {
+        Note note = noteRepository.findById(id);
+        if (note == null){
+            throw new NoteNotFoundException("Note not found with id: " + id);
+        }
         return noteRepository.findById(id);
     }
 
