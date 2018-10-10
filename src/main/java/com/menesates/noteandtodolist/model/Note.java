@@ -1,11 +1,26 @@
 package com.menesates.noteandtodolist.model;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+
+@Entity
+@Table(name = "T_NOTE")
 public class Note {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "noteAndTodoSeqGen")
+    @SequenceGenerator(name = "noteAndTodoSeqGen", sequenceName = "NOTEANDTODO_SEQUENCE")
     private Long id;
+    @NotEmpty
+    @Column(name = "HEADER")
     private String header;
+    @Column(name = "BODY")
     private String body;
+    @NotEmpty
+    @Column(name = "USERNAME")
     private String username;
+    @NotEmpty
+    @Column(name = "CATEGORY")
     private String category;
 
     public Long getId() {

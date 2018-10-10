@@ -4,6 +4,7 @@ import com.menesates.noteandtodolist.dao.NoteRepository;
 import com.menesates.noteandtodolist.exception.NoteNotFoundException;
 import com.menesates.noteandtodolist.model.Note;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +15,7 @@ public class NoteAndTodoServiceImpl implements NoteAndTodoService {
     private NoteRepository noteRepository;
 
     @Autowired
+    @Qualifier("noteRepositoryInMemoryImpl")
     public void setNoteRepository(NoteRepository noteRepository){
         this.noteRepository = noteRepository;
     }

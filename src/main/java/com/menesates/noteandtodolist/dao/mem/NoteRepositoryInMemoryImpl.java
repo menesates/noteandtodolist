@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
  * @author menesates
  * @since 2018-10-09
  */
-@Repository
+@Repository("noteRepositoryInMemoryImpl")
 public class NoteRepositoryInMemoryImpl implements NoteRepository {
 
     private Map<Long, Note> noteMap = new HashMap<>();
