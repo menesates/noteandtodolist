@@ -39,12 +39,12 @@ public class NoteAndTodoServiceImpl implements NoteAndTodoService {
 
     @Override
     @Transactional(propagation = Propagation.SUPPORTS,readOnly = true)
-    public Note findNote(Long id) throws NoteNotFoundException {
-        Note note = noteRepository.findById(id);
+    public Note findNote(Long id, String username) throws NoteNotFoundException {
+        Note note = noteRepository.findById(id, username);
         if (note == null){
             throw new NoteNotFoundException("Note not found with id: " + id);
-        }
-        return noteRepository.findById(id);
+        } // todo hatayı yakalamalımı fırlatmalı mı
+        return note;
     }
 
     @Override
@@ -58,7 +58,8 @@ public class NoteAndTodoServiceImpl implements NoteAndTodoService {
     }
 
     @Override
-    public void deleteNote(Long id) {
-        noteRepository.delete(id);
+    public void deleteNote(Long id, String username) {
+        noteRepository.delete(id,username);
+        // todo hatayı yakalamalımı fırlatmalı mı
     }
 }

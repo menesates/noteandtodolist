@@ -21,6 +21,6 @@ public class NoteAndTodoServiceWithoutAuthTokenTests {
 
     @Test(expected = AuthenticationCredentialsNotFoundException.class)
     public void testFindNote(){
-        noteAndTodoService.findNote(1L);
+        noteAndTodoService.findNote(1L, "user1");
     }
 }

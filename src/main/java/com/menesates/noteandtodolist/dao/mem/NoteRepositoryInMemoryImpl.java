@@ -75,7 +75,7 @@ public class NoteRepositoryInMemoryImpl implements NoteRepository {
     }
 
     @Override
-    public Note findById(Long id) {
+    public Note findById(Long id, String username) {
         return noteMap.get(id);
     }
 
@@ -88,7 +88,6 @@ public class NoteRepositoryInMemoryImpl implements NoteRepository {
 
     @Override
     public void create(Note note) {
-        //note.setId(new Date().getTime());
         noteMap.put(note.getId(),note);
     }
 
@@ -99,7 +98,7 @@ public class NoteRepositoryInMemoryImpl implements NoteRepository {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(Long id, String username) {
         noteMap.remove(id);
     }
 }

@@ -41,6 +41,6 @@ public class NoteAndTodoServiceWithAuthTokenTests {
 
     @Test(expected = AccessDeniedException.class)
     public void testFindNoteById(){
-        noteAndTodoService.findNote(1L);
+        noteAndTodoService.findNote(1L,"user1");
     }
 }

@@ -31,12 +31,12 @@ public class ApplicationRestController {
     }
 
     @RequestMapping(method = RequestMethod.GET,value = "/notes/{id}")
-    public ResponseEntity<?> getNote(@PathVariable("id") Long id){
+    public ResponseEntity<?> getNote(@PathVariable("id") Long id, Principal principal){
         try {
-            Note note = noteAndTodoService.findNote(id);
+            Note note = noteAndTodoService.findNote(id, principal.getName());
             return ResponseEntity.ok(note);
         } catch (NoteNotFoundException e) {
             return ResponseEntity.notFound().build();
-        }
+        } // todo note kullanıcının değil hatası ekleyeceğim. yani yetkisiz erişim denemesi
     }
 }

@@ -56,7 +56,7 @@ public class NoteAndTodoServiceWithValidAuthTokenTests {
 
     @Test(expected = NoteNotFoundException.class)
     public void testFindNoteByIdNotFound(){
-        Note note = noteAndTodoService.findNote(100L);
+        Note note = noteAndTodoService.findNote(100L,"user1");
     }
 
     @Test
@@ -70,10 +70,10 @@ public class NoteAndTodoServiceWithValidAuthTokenTests {
 
         noteAndTodoService.createNote(note);
 
-        Note find = noteAndTodoService.findNote(note.getId());
+        Note find = noteAndTodoService.findNote(note.getId(),username);
         MatcherAssert.assertThat(note.getId(),Matchers.equalTo(find.getId()));
 
-        noteAndTodoService.deleteNote(note.getId());
+        noteAndTodoService.deleteNote(note.getId(),note.getUsername());
     }
 
     @Test
@@ -96,10 +96,10 @@ public class NoteAndTodoServiceWithValidAuthTokenTests {
 
         noteAndTodoService.createNote(note);
 
-        Note find = noteAndTodoService.findNote(note.getId());
+        Note find = noteAndTodoService.findNote(note.getId(),username);
         MatcherAssert.assertThat(note.getUsername(),Matchers.equalTo(find.getUsername()));
 
-        noteAndTodoService.deleteNote(note.getId());
+        noteAndTodoService.deleteNote(note.getId(),note.getUsername());
 
         //entityManager.flush();
     }
@@ -124,7 +124,7 @@ public class NoteAndTodoServiceWithValidAuthTokenTests {
 
         noteAndTodoService.updateNote(update);
 
-        Note result = noteAndTodoService.findNote(note.getId());
+        Note result = noteAndTodoService.findNote(note.getId(),username);
 
         MatcherAssert.assertThat(result.getHeader(),Matchers.equalTo(update.getHeader()));
         MatcherAssert.assertThat(result.getCategory(),Matchers.equalTo("succes"));
@@ -140,9 +140,9 @@ public class NoteAndTodoServiceWithValidAuthTokenTests {
         note.setCategory("danger");
 
         noteAndTodoService.createNote(note);
-
-        noteAndTodoService.deleteNote(note.getId());
-
-        Note find = noteAndTodoService.findNote(note.getId());
+        noteAndTodoService.deleteNote(note.getId(),note.getUsername());
+        Note find = noteAndTodoService.findNote(note.getId(),username);
     }
+
+    // todo yetkisiz erişim testi
 }

@@ -1,6 +1,7 @@
 package com.menesates.noteandtodolist.dao.jpa;
 
 import com.menesates.noteandtodolist.dao.NoteRepository;
+import com.menesates.noteandtodolist.exception.NoteNotFoundException;
 import com.menesates.noteandtodolist.model.Note;
 import org.springframework.stereotype.Repository;
 
@@ -22,8 +23,17 @@ public class NoteRepositoryJpaImpl implements NoteRepository {
     }
 
     @Override
-    public Note findById(Long id) {
-        return entityManager.find(Note.class,id);
+    public Note findById(Long id, String username) {
+        Note note = entityManager.find(Note.class,id);
+        if (note == null){
+            throw new NoteNotFoundException("note not found id: "+id);
+        }
+        else if (note.getUsername().equals(username)){
+            return note;
+        }
+        else {
+            return null; // todo hata fırlatabilirim.
+        }
     }
 
     @Override
@@ -46,7 +56,14 @@ public class NoteRepositoryJpaImpl implements NoteRepository {
     }
 
     @Override
-    public void delete(Long id) {
-        entityManager.remove(entityManager.getReference(Note.class,id));
+    public void delete(Long id, String username) {
+        Note note = entityManager.find(Note.class,id);
+        if (note == null){
+            throw new NoteNotFoundException("note not found id: "+id);
+        }
+        else if (note.getUsername().equals(username)){
+            entityManager.remove(entityManager.getReference(Note.class,id));
+        }
+        // todo yetkisiz erişim hatası
     }
 }

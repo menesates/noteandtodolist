@@ -8,8 +8,8 @@ import java.util.List;
 public interface NoteAndTodoService {
     List<Note> findNotes(String username);
     List<Note> findNotes(String username, String category);
-    Note findNote(Long id) throws NoteNotFoundException;
+    Note findNote(Long id, String username) throws NoteNotFoundException;
     void createNote(Note note);
     void updateNote(Note note);
-    void deleteNote(Long id);
+    void deleteNote(Long id, String username);
 }

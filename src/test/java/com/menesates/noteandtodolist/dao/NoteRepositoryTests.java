@@ -8,6 +8,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -22,6 +24,7 @@ import java.util.stream.IntStream;
 public class NoteRepositoryTests {
 
     @Autowired
+    @Qualifier("noteRepositoryInMemoryImpl")
     private NoteRepository noteRepository;
 
     @Test
@@ -39,14 +42,14 @@ public class NoteRepositoryTests {
     @Test
     // method adı calistirma sirasi icin degistirildi
     public void a_findByIdTest(){
-        Note note = noteRepository.findById(1L);
+        Note note = noteRepository.findById(1L,"user1");
         MatcherAssert.assertThat(note.getUsername(),Matchers.equalTo("user1"));
     }
 
     @Test(expected = NullPointerException.class)
     // method adı calistirma sirasi icin degistirildi
     public void a_findByIdNotFoundTest(){
-        Note note = noteRepository.findById(10L);
+        Note note = noteRepository.findById(10L,"user1");
         MatcherAssert.assertThat(note.getUsername(),Matchers.equalTo("user1"));
     }
 
@@ -66,7 +69,7 @@ public class NoteRepositoryTests {
         note.setCategory("succes");
 
         noteRepository.create(note);
-        Note result = noteRepository.findById(10L);
+        Note result = noteRepository.findById(10L,"user1");
         MatcherAssert.assertThat(note.getId(),Matchers.equalTo(10L));
     }
 
@@ -85,9 +88,11 @@ public class NoteRepositoryTests {
 
     @Test(expected = NullPointerException.class)
     public void deleteTest(){
-        noteRepository.delete(1L);
-        Note note = noteRepository.findById(1L);
+        noteRepository.delete(1L, "user1");
+        Note note = noteRepository.findById(1L,"user1");
         System.out.println(note);
         MatcherAssert.assertThat(note.getUsername(),Matchers.equalTo("user1"));
     }
+
+    // todo yetkisiz erişim testi
 }

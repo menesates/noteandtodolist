@@ -45,7 +45,7 @@ public class NoteRepositoryJpaImpTest {
 
     @Test
     public void testFindById(){
-        Note note = noteRepository.findById(1L);
+        Note note = noteRepository.findById(1L,"user1");
         MatcherAssert.assertThat(note.getUsername(),Matchers.equalTo("user1"));
     }
 
@@ -65,9 +65,6 @@ public class NoteRepositoryJpaImpTest {
         note.setCategory("danger");
 
         noteRepository.create(note);
-        Note find = noteRepository.findById(note.getId());
-
-        MatcherAssert.assertThat(note.getUsername(),Matchers.equalTo(find.getUsername()));
 
         entityManager.flush();
     }
@@ -88,10 +85,14 @@ public class NoteRepositoryJpaImpTest {
 
     @Test(expected = NoteNotFoundException.class)
     public void testDelete(){
-        noteRepository.delete(1L);
-        Note note = noteRepository.findById(1L);
-        if (note == null) {
-            throw new NoteNotFoundException("Note not found id: " + 1L);
-        }
+        Note note = new Note();
+        note.setHeader("test delete");
+        note.setBody("test body");
+        note.setUsername("user4");
+        note.setCategory("danger");
+
+        noteRepository.create(note);
+        noteRepository.delete(note.getId(),note.getUsername());
+        Note result = noteRepository.findById(note.getId(),"user4");
     }
 }
