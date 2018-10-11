@@ -29,14 +29,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 "js/**",
                 "/images/**",
                 "/webjars/**",
-                "/login.html")
-                .permitAll();
-        http.authorizeRequests().antMatchers("/rest/**").access("hasRole('EDITOR')");
-        http.authorizeRequests().antMatchers("/actuator/**").access("hasRole('ADMIN')");
-
-        http.authorizeRequests().anyRequest().authenticated();
+                "/login.html").permitAll()
+                .antMatchers("/rest/**").access("hasRole('EDITOR')")
+                .antMatchers("/actuator/**").access("hasRole('ADMIN')")
+                .anyRequest().authenticated();
 
         http.formLogin();
+
+        http.httpBasic();
     }
 
     @Override

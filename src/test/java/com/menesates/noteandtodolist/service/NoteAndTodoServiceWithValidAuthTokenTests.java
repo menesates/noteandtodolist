@@ -27,6 +27,9 @@ public class NoteAndTodoServiceWithValidAuthTokenTests {
     @Autowired
     private NoteAndTodoService noteAndTodoService;
 
+    @Autowired
+    private EntityManager entityManager;
+
     @Before
     public void setUp(){
         TestingAuthenticationToken authenticationToken = new TestingAuthenticationToken("user1",
@@ -97,6 +100,8 @@ public class NoteAndTodoServiceWithValidAuthTokenTests {
         MatcherAssert.assertThat(note.getUsername(),Matchers.equalTo(find.getUsername()));
 
         noteAndTodoService.deleteNote(note.getId());
+
+        //entityManager.flush();
     }
 
     @Test
@@ -111,6 +116,7 @@ public class NoteAndTodoServiceWithValidAuthTokenTests {
         noteAndTodoService.createNote(note);
 
         Note update = new Note();
+        update.setId(note.getId());
         update.setHeader("Service Test Update New Note");
         update.setBody("Service Test");
         update.setUsername(username);
@@ -118,9 +124,9 @@ public class NoteAndTodoServiceWithValidAuthTokenTests {
 
         noteAndTodoService.updateNote(update);
 
-        Note result = noteAndTodoService.findNote(update.getId());
+        Note result = noteAndTodoService.findNote(note.getId());
 
-        MatcherAssert.assertThat(result.getId(),Matchers.equalTo(update.getId()));
+        MatcherAssert.assertThat(result.getHeader(),Matchers.equalTo(update.getHeader()));
         MatcherAssert.assertThat(result.getCategory(),Matchers.equalTo("succes"));
     }
 

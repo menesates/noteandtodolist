@@ -20,7 +20,7 @@ public class NoteAndTodoServiceImpl implements NoteAndTodoService {
     private NoteRepository noteRepository;
 
     @Autowired
-    @Qualifier("noteRepositoryInMemoryImpl")
+    @Qualifier("noteRepositoryJpaImpl")
     public void setNoteRepository(NoteRepository noteRepository){
         this.noteRepository = noteRepository;
     }
