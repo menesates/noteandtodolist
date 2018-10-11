@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -24,8 +25,8 @@ public class ApplicationRestController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/notes")
-    public ResponseEntity<List<Note>> getNotes(){
-        List<Note> notes = noteAndTodoService.findNotes("user1");
+    public ResponseEntity<List<Note>> getNotes(Principal principal){
+        List<Note> notes = noteAndTodoService.findNotes(principal.getName());
         return ResponseEntity.ok(notes);
     }
 

@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.security.Principal;
+
 @Controller
 public class ApplicationController {
 
@@ -14,9 +16,9 @@ public class ApplicationController {
     private NoteAndTodoService noteAndTodoService;
 
     @RequestMapping("/notes")
-    public ModelAndView getNotes(){
+    public ModelAndView getNotes(Principal principal){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("notes", noteAndTodoService.findNotes("user1"));
+        modelAndView.addObject("notes", noteAndTodoService.findNotes(principal.getName()));
         modelAndView.setViewName("notes");
         return modelAndView;
     }
