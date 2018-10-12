@@ -1,6 +1,7 @@
 package com.menesates.noteandtodolist.dao.jpa;
 
 import com.menesates.noteandtodolist.dao.NoteRepository;
+import com.menesates.noteandtodolist.exception.NoteForbiddenException;
 import com.menesates.noteandtodolist.exception.NoteNotFoundException;
 import com.menesates.noteandtodolist.model.Note;
 import org.hamcrest.MatcherAssert;
@@ -47,6 +48,16 @@ public class NoteRepositoryJpaImpTest {
     public void testFindById(){
         Note note = noteRepository.findById(1L,"user1");
         MatcherAssert.assertThat(note.getUsername(),Matchers.equalTo("user1"));
+    }
+
+    @Test(expected = NoteForbiddenException.class)
+    public void testFindByIdForbidden(){
+        Note note = noteRepository.findById(1L,"user2");
+    }
+
+    @Test(expected = NoteNotFoundException.class)
+    public void testFindByIdNotFound(){
+        Note note = noteRepository.findById(100L,"user1");
     }
 
     @Test

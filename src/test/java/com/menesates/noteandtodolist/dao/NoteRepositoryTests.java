@@ -93,6 +93,4 @@ public class NoteRepositoryTests {
         System.out.println(note);
         MatcherAssert.assertThat(note.getUsername(),Matchers.equalTo("user1"));
     }
-
-    // todo yetkisiz erişim testi
 }

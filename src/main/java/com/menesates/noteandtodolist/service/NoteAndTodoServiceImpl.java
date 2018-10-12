@@ -1,6 +1,7 @@
 package com.menesates.noteandtodolist.service;
 
 import com.menesates.noteandtodolist.dao.NoteRepository;
+import com.menesates.noteandtodolist.exception.NoteForbiddenException;
 import com.menesates.noteandtodolist.exception.NoteNotFoundException;
 import com.menesates.noteandtodolist.model.Note;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,11 +40,8 @@ public class NoteAndTodoServiceImpl implements NoteAndTodoService {
 
     @Override
     @Transactional(propagation = Propagation.SUPPORTS,readOnly = true)
-    public Note findNote(Long id, String username) throws NoteNotFoundException {
+    public Note findNote(Long id, String username) throws NoteNotFoundException, NoteForbiddenException {
         Note note = noteRepository.findById(id, username);
-        if (note == null){
-            throw new NoteNotFoundException("Note not found with id: " + id);
-        } // todo hatayı yakalamalımı fırlatmalı mı
         return note;
     }
 
@@ -58,8 +56,7 @@ public class NoteAndTodoServiceImpl implements NoteAndTodoService {
     }
 
     @Override
-    public void deleteNote(Long id, String username) {
+    public void deleteNote(Long id, String username) throws NoteNotFoundException, NoteForbiddenException{
         noteRepository.delete(id,username);
-        // todo hatayı yakalamalımı fırlatmalı mı
     }
 }

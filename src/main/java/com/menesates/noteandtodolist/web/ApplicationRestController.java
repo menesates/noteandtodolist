@@ -1,9 +1,11 @@
 package com.menesates.noteandtodolist.web;
 
+import com.menesates.noteandtodolist.exception.NoteForbiddenException;
 import com.menesates.noteandtodolist.exception.NoteNotFoundException;
 import com.menesates.noteandtodolist.model.Note;
 import com.menesates.noteandtodolist.service.NoteAndTodoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,6 +39,8 @@ public class ApplicationRestController {
             return ResponseEntity.ok(note);
         } catch (NoteNotFoundException e) {
             return ResponseEntity.notFound().build();
-        } // todo note kullanıcının değil hatası ekleyeceğim. yani yetkisiz erişim denemesi
+        } catch (NoteForbiddenException e){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+        }
     }
 }

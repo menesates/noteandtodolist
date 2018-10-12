@@ -1,5 +1,6 @@
 package com.menesates.noteandtodolist.service;
 
+import com.menesates.noteandtodolist.exception.NoteForbiddenException;
 import com.menesates.noteandtodolist.exception.NoteNotFoundException;
 import com.menesates.noteandtodolist.model.Note;
 import org.hamcrest.MatcherAssert;
@@ -57,6 +58,11 @@ public class NoteAndTodoServiceWithValidAuthTokenTests {
     @Test(expected = NoteNotFoundException.class)
     public void testFindNoteByIdNotFound(){
         Note note = noteAndTodoService.findNote(100L,"user1");
+    }
+
+    @Test(expected = NoteForbiddenException.class)
+    public void testFindNoteByIdForbidden(){
+        Note note = noteAndTodoService.findNote(1L,"user2");
     }
 
     @Test
@@ -144,5 +150,9 @@ public class NoteAndTodoServiceWithValidAuthTokenTests {
         Note find = noteAndTodoService.findNote(note.getId(),username);
     }
 
-    // todo yetkisiz erişim testi
+    @Test(expected = NoteForbiddenException.class)
+    public void testDeleteNoteForbidden(){
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        noteAndTodoService.deleteNote(5L,username);
+    }
 }
