@@ -34,7 +34,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/actuator/**").access("hasRole('ADMIN')")
                 .anyRequest().authenticated();
 
-        http.formLogin();
+        http.formLogin().loginPage("/login.html")
+                .loginProcessingUrl("/login")
+                .failureUrl("/login.html?loginFailed=true");
+
+        // todo remember me yapılacak
+        //http.rememberMe().userDetailsService(userDetailsService);
 
         http.httpBasic();
     }

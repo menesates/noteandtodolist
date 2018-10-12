@@ -30,4 +30,11 @@ public class ApplicationController {
         modelAndView.setViewName("index");
         return modelAndView;
     }
+
+    @RequestMapping(value="/login.html")
+    public ModelAndView loginPage() {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("login");
+        return mav;
+    }
 }
